@@ -4,7 +4,7 @@ App = React.createClass({
 
   getMeteorData() {
     return {
-      issues: Issues.find({}).fetch()
+      issues: Issues.find({}, { sort: { createdAt: -1 } }).fetch()
     }
   },
 
