@@ -8,6 +8,21 @@ App = React.createClass({
     }
   },
 
+  handleSubmit (event) {
+    event.preventDefault();
+
+    // Find the text field via the React ref
+    var text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
+
+    Issues.insert({
+      text: text,
+      createdAt: new Date()
+    });
+
+    // Clear form
+    ReactDOM.findDOMNode(this.refs.textInput).value = '';
+  },
+
   renderIssues() {
     return this.data.issues.map((issue) => {
       return <Issue key={issue._id} issue={issue} />;
@@ -20,6 +35,13 @@ App = React.createClass({
         <header>
           <h1>List</h1>
         </header>
+
+        <form onSubmit={this.handleSubmit} >
+          <input
+            type="text"
+            ref="textInput"
+            placeholder="Type to add new issues" />
+        </form>
 
         <ul>
           {this.renderIssues()}
